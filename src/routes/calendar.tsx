@@ -437,6 +437,7 @@ function CalendarPage() {
                   <th className="px-4 py-2 font-medium">Date</th>
                   <th className="px-4 py-2 font-medium">Employee</th>
                   <th className="px-4 py-2 font-medium">Type</th>
+                  <th className="px-4 py-2 font-medium">Occurrence</th>
                   <th className="px-4 py-2 font-medium text-right">Hours</th>
                   <th className="px-4 py-2 font-medium">Notes</th>
                 </tr>
@@ -444,7 +445,7 @@ function CalendarPage() {
               <tbody>
                 {filteredAttendance.length === 0 && (
                   <tr>
-                    <td colSpan={5} className="px-4 py-8 text-center text-muted-foreground">
+                    <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">
                       No entries match the current filters.
                     </td>
                   </tr>
@@ -465,6 +466,17 @@ function CalendarPage() {
                         >
                           {TYPE_LABEL[r.type]}
                         </Badge>
+                      </td>
+                      <td className="px-4 py-2">
+                        {r.occurrence ? (
+                          <Badge variant="secondary" className="border-0 bg-destructive/15 font-medium text-destructive">
+                            {r.occurrence_reason
+                              ? OCCURRENCE_REASON_LABEL[r.occurrence_reason as Exclude<OccurrenceReason, "">]
+                              : "Yes"}
+                          </Badge>
+                        ) : (
+                          <span className="text-muted-foreground">—</span>
+                        )}
                       </td>
                       <td className="px-4 py-2 text-right tabular-nums text-foreground">
                         {r.hours || "—"}
