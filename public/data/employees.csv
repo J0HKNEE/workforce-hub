@@ -1,0 +1,13 @@
+employee_id,name,team,location,manager,status
+E001,Alex Rivera,Operations,HQ,Jamie Chen,Active
+E002,Priya Patel,Operations,HQ,Jamie Chen,Active
+E003,Marcus Lee,Operations,Remote,Jamie Chen,Active
+E004,Sofia Garcia,Support,HQ,Dana Kim,Active
+E005,Liam O'Brien,Support,HQ,Dana Kim,Active
+E006,Yuki Tanaka,Support,Remote,Dana Kim,Active
+E007,Noah Williams,Engineering,HQ,Riley Park,Active
+E008,Aisha Khan,Engineering,Remote,Riley Park,Active
+E009,Ethan Brown,Engineering,Remote,Riley Park,Active
+E010,Maya Singh,Engineering,HQ,Riley Park,Active
+E011,Carlos Mendes,Operations,West,Jamie Chen,Active
+E012,Hannah Cohen,Support,West,Dana Kim,Active
