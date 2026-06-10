@@ -401,12 +401,15 @@ function CalendarPage() {
                       <div
                         key={i}
                         className="flex items-center gap-1 truncate text-[11px] text-foreground"
-                        title={`${nameOf.get(r.employee_id) ?? r.employee_id} — ${TYPE_LABEL[r.type]}${r.notes ? " · " + r.notes : ""}`}
+                        title={`${nameOf.get(r.employee_id) ?? r.employee_id} — ${TYPE_LABEL[r.type]}${r.occurrence ? " · Occurrence: " + (r.occurrence_reason || "Yes") : ""}${r.notes ? " · " + r.notes : ""}`}
                       >
                         <span className={"h-1.5 w-1.5 shrink-0 rounded-full " + TYPE_DOT[r.type]} />
                         <span className="truncate">
                           {(nameOf.get(r.employee_id) ?? r.employee_id).split(" ")[0]}
                         </span>
+                        {r.occurrence && (
+                          <AlertTriangle className="h-2.5 w-2.5 shrink-0 text-destructive" />
+                        )}
                       </div>
                     ))}
                     {recs.length > 4 && (
