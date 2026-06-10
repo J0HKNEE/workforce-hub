@@ -1,48 +1,55 @@
-date,employee_id,type,hours,notes
-2026-06-01,E001,Present,8,
-2026-06-01,E002,PTO,8,Vacation
-2026-06-01,E003,Present,8,
-2026-06-01,E004,Absent,8,Sick
-2026-06-01,E005,Present,8,
-2026-06-01,E006,ShortShift,4,Doctor appt
-2026-06-01,E007,Present,8,
-2026-06-01,E008,Makeup,2,Sat work
-2026-06-01,E009,Present,8,
-2026-06-01,E010,Present,8,
-2026-06-02,E001,Present,8,
-2026-06-02,E002,PTO,8,Vacation
-2026-06-02,E004,Absent,8,Sick
-2026-06-02,E005,ShortShift,5,Family
-2026-06-02,E006,Present,8,
-2026-06-03,E001,Present,8,
-2026-06-03,E002,Present,8,
-2026-06-03,E007,Absent,8,No call
-2026-06-08,E001,Present,8,
-2026-06-08,E002,Present,8,
-2026-06-08,E003,PTO,8,
-2026-06-08,E004,Present,8,
-2026-06-08,E005,Present,8,
-2026-06-08,E006,Present,8,
-2026-06-08,E007,Present,8,
-2026-06-08,E008,Present,8,
-2026-06-08,E009,ShortShift,4,Half day
-2026-06-08,E010,Absent,8,Sick
-2026-06-09,E001,Present,8,
-2026-06-09,E002,Present,8,
-2026-06-09,E003,PTO,8,
-2026-06-09,E004,Makeup,3,
-2026-06-09,E005,Present,8,
-2026-06-09,E006,Absent,8,
-2026-06-09,E010,Absent,8,Sick
-2026-06-10,E001,Present,8,
-2026-06-10,E002,Present,8,
-2026-06-10,E003,PTO,8,
-2026-06-10,E004,Present,8,
-2026-06-10,E005,Present,8,
-2026-06-10,E006,Present,8,
-2026-06-10,E007,Present,8,
-2026-06-10,E008,ShortShift,6,Appt
-2026-06-10,E009,Present,8,
-2026-06-10,E010,Present,8,
-2026-06-10,E011,Absent,8,Sick
-2026-06-10,E012,Present,8,
+date,employee_id,type,hours,occurrence,occurrence_reason,notes
+2026-06-01,E001,Present,8,FALSE,,
+2026-06-01,E002,PTO,8,FALSE,,Vacation
+2026-06-01,E003,Present,8,FALSE,,
+2026-06-01,E004,Absent,8,TRUE,Absence,Sick no-call
+2026-06-01,E005,Present,8,FALSE,,
+2026-06-01,E006,ShortShift,4,TRUE,LeaveEarly,Doctor appt
+2026-06-01,E007,Present,8,FALSE,,
+2026-06-01,E008,Makeup,2,FALSE,,Sat work
+2026-06-01,E009,Present,8,FALSE,,
+2026-06-01,E010,Present,8,FALSE,,
+2026-06-02,E001,Present,7.5,TRUE,Tardy,25 min late
+2026-06-02,E002,PTO,8,FALSE,,Vacation
+2026-06-02,E004,Absent,8,TRUE,Absence,Sick
+2026-06-02,E005,ShortShift,5,TRUE,LeaveEarly,Family
+2026-06-02,E006,Present,8,FALSE,,
+2026-06-03,E001,Present,8,FALSE,,
+2026-06-03,E002,Present,8,FALSE,,
+2026-06-03,E007,Absent,8,TRUE,Absence,No call
+2026-06-08,E001,Present,8,FALSE,,
+2026-06-08,E002,Present,8,FALSE,,
+2026-06-08,E003,PTO,8,FALSE,,
+2026-06-08,E004,Present,8,FALSE,,
+2026-06-08,E005,Present,8,FALSE,,
+2026-06-08,E006,Present,8,FALSE,,
+2026-06-08,E007,Present,8,FALSE,,
+2026-06-08,E008,Present,8,FALSE,,
+2026-06-08,E009,ShortShift,4,TRUE,LeaveEarly,Half day
+2026-06-08,E010,Absent,8,TRUE,Absence,Sick
+2026-06-09,E001,Present,8,FALSE,,
+2026-06-09,E002,Present,8,FALSE,,
+2026-06-09,E003,PTO,8,FALSE,,
+2026-06-09,E004,Makeup,3,FALSE,,
+2026-06-09,E005,Present,8,FALSE,,
+2026-06-09,E006,Absent,8,TRUE,Absence,
+2026-06-09,E010,Absent,8,TRUE,Absence,Sick
+2026-06-10,E001,Present,8,FALSE,,
+2026-06-10,E002,Present,8,FALSE,,
+2026-06-10,E003,PTO,8,FALSE,,
+2026-06-10,E004,Present,7.5,TRUE,Tardy,Late from lunch
+2026-06-10,E005,Present,8,FALSE,,
+2026-06-10,E006,Present,8,FALSE,,
+2026-06-10,E007,Present,8,FALSE,,
+2026-06-10,E008,ShortShift,6,TRUE,LeaveEarly,Appt
+2026-06-10,E009,Present,8,FALSE,,
+2026-06-10,E010,Present,8,FALSE,,
+2026-06-10,E011,Absent,8,TRUE,Absence,Sick
+2026-06-10,E012,Present,8,FALSE,,
+2026-04-15,E004,Absent,8,TRUE,Absence,
+2026-05-05,E004,Present,7.5,TRUE,Tardy,20 min late
+2026-03-20,E010,Absent,8,TRUE,Absence,
+2026-04-02,E010,ShortShift,4,TRUE,LeaveEarly,
+2025-09-10,E004,Absent,8,TRUE,Absence,Final issued
+2025-12-12,E004,Absent,8,TRUE,Absence,Final issued
+2026-02-18,E004,Absent,8,TRUE,Absence,Final issued
