@@ -149,9 +149,12 @@ function CalendarPage() {
       if (employeeId !== "all" && r.employee_id !== employeeId) return false;
       else if (!empIds.has(r.employee_id)) return false;
       if (typeFilter !== "all" && r.type !== typeFilter) return false;
+      if (occFilter === "only" && !r.occurrence) return false;
+      if (occFilter === "exclude" && r.occurrence) return false;
+      if (reasonFilter !== "all" && r.occurrence_reason !== reasonFilter) return false;
       return true;
     });
-  }, [attendance, filteredEmployees, employeeId, typeFilter, startISO, endISO]);
+  }, [attendance, filteredEmployees, employeeId, typeFilter, occFilter, reasonFilter, startISO, endISO]);
 
   // Group records by date for grid cells
   const byDate = useMemo(() => {
