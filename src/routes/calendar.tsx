@@ -15,10 +15,12 @@ import { Badge } from "@/components/ui/badge";
 import { useWorkforceData } from "@/hooks/use-workforce-data";
 import {
   TYPE_LABEL,
+  OCCURRENCE_REASON_LABEL,
   type AttendanceRecord,
   type AttendanceType,
+  type OccurrenceReason,
 } from "@/lib/attendance";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { AlertTriangle, ChevronLeft, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/calendar")({
   head: () => ({
@@ -123,6 +125,8 @@ function CalendarPage() {
   const [manager, setManager] = useState<string>("all");
   const [employeeId, setEmployeeId] = useState<string>("all");
   const [typeFilter, setTypeFilter] = useState<string>("all");
+  const [occFilter, setOccFilter] = useState<"all" | "only" | "exclude">("all");
+  const [reasonFilter, setReasonFilter] = useState<string>("all");
 
   const managers = useMemo(
     () => Array.from(new Set(employees.map((e) => e.manager))).sort(),
@@ -145,9 +149,12 @@ function CalendarPage() {
       if (employeeId !== "all" && r.employee_id !== employeeId) return false;
       else if (!empIds.has(r.employee_id)) return false;
       if (typeFilter !== "all" && r.type !== typeFilter) return false;
+      if (occFilter === "only" && !r.occurrence) return false;
+      if (occFilter === "exclude" && r.occurrence) return false;
+      if (reasonFilter !== "all" && r.occurrence_reason !== reasonFilter) return false;
       return true;
     });
-  }, [attendance, filteredEmployees, employeeId, typeFilter, startISO, endISO]);
+  }, [attendance, filteredEmployees, employeeId, typeFilter, occFilter, reasonFilter, startISO, endISO]);
 
   // Group records by date for grid cells
   const byDate = useMemo(() => {
@@ -311,6 +318,27 @@ function CalendarPage() {
                 ))}
               </SelectContent>
             </Select>
+            <Select value={occFilter} onValueChange={(v) => setOccFilter(v as typeof occFilter)}>
+              <SelectTrigger className="w-44">
+                <SelectValue placeholder="Occurrences" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All records</SelectItem>
+                <SelectItem value="only">Occurrences only</SelectItem>
+                <SelectItem value="exclude">Exclude occurrences</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={reasonFilter} onValueChange={setReasonFilter}>
+              <SelectTrigger className="w-44">
+                <SelectValue placeholder="Reason" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All reasons</SelectItem>
+                {(Object.keys(OCCURRENCE_REASON_LABEL) as Exclude<OccurrenceReason, "">[]).map((r) => (
+                  <SelectItem key={r} value={r}>{OCCURRENCE_REASON_LABEL[r]}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </CardContent>
       </Card>
@@ -373,12 +401,15 @@ function CalendarPage() {
                       <div
                         key={i}
                         className="flex items-center gap-1 truncate text-[11px] text-foreground"
-                        title={`${nameOf.get(r.employee_id) ?? r.employee_id} — ${TYPE_LABEL[r.type]}${r.notes ? " · " + r.notes : ""}`}
+                        title={`${nameOf.get(r.employee_id) ?? r.employee_id} — ${TYPE_LABEL[r.type]}${r.occurrence ? " · Occurrence: " + (r.occurrence_reason || "Yes") : ""}${r.notes ? " · " + r.notes : ""}`}
                       >
                         <span className={"h-1.5 w-1.5 shrink-0 rounded-full " + TYPE_DOT[r.type]} />
                         <span className="truncate">
                           {(nameOf.get(r.employee_id) ?? r.employee_id).split(" ")[0]}
                         </span>
+                        {r.occurrence && (
+                          <AlertTriangle className="h-2.5 w-2.5 shrink-0 text-destructive" />
+                        )}
                       </div>
                     ))}
                     {recs.length > 4 && (
@@ -406,6 +437,7 @@ function CalendarPage() {
                   <th className="px-4 py-2 font-medium">Date</th>
                   <th className="px-4 py-2 font-medium">Employee</th>
                   <th className="px-4 py-2 font-medium">Type</th>
+                  <th className="px-4 py-2 font-medium">Occurrence</th>
                   <th className="px-4 py-2 font-medium text-right">Hours</th>
                   <th className="px-4 py-2 font-medium">Notes</th>
                 </tr>
@@ -413,7 +445,7 @@ function CalendarPage() {
               <tbody>
                 {filteredAttendance.length === 0 && (
                   <tr>
-                    <td colSpan={5} className="px-4 py-8 text-center text-muted-foreground">
+                    <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">
                       No entries match the current filters.
                     </td>
                   </tr>
@@ -434,6 +466,17 @@ function CalendarPage() {
                         >
                           {TYPE_LABEL[r.type]}
                         </Badge>
+                      </td>
+                      <td className="px-4 py-2">
+                        {r.occurrence ? (
+                          <Badge variant="secondary" className="border-0 bg-destructive/15 font-medium text-destructive">
+                            {r.occurrence_reason
+                              ? OCCURRENCE_REASON_LABEL[r.occurrence_reason as Exclude<OccurrenceReason, "">]
+                              : "Yes"}
+                          </Badge>
+                        ) : (
+                          <span className="text-muted-foreground">—</span>
+                        )}
                       </td>
                       <td className="px-4 py-2 text-right tabular-nums text-foreground">
                         {r.hours || "—"}

@@ -14,12 +14,33 @@ export interface Employee {
   status: string;
 }
 
+export type OccurrenceReason = "Absence" | "Tardy" | "LeaveEarly" | "";
+
 export interface AttendanceRecord {
   date: string; // YYYY-MM-DD
   employee_id: string;
   type: AttendanceType;
   hours: number;
+  occurrence: boolean;
+  occurrence_reason: OccurrenceReason;
   notes: string;
+}
+
+export const OCCURRENCE_REASON_LABEL: Record<Exclude<OccurrenceReason, "">, string> = {
+  Absence: "Absence",
+  Tardy: "Tardy (≥15 min)",
+  LeaveEarly: "Left Early (≥15 min)",
+};
+
+export type CorrectiveLevel = "None" | "Verbal" | "Written" | "Final" | "Termination";
+
+export function correctiveLevelFor(count: number, finals12m: number): CorrectiveLevel {
+  if (finals12m >= 3) return "Termination";
+  if (count >= 6) return "Termination";
+  if (count >= 5) return "Final";
+  if (count >= 4) return "Written";
+  if (count >= 3) return "Verbal";
+  return "None";
 }
 
 // Minimal CSV parser (handles quoted fields with commas)
@@ -87,6 +108,8 @@ export async function loadAttendance(): Promise<AttendanceRecord[]> {
     employee_id: r.employee_id,
     type: (r.type as AttendanceType) || "Present",
     hours: Number(r.hours) || 0,
+    occurrence: /^(true|1|yes|y)$/i.test(r.occurrence || ""),
+    occurrence_reason: (r.occurrence_reason as OccurrenceReason) || "",
     notes: r.notes || "",
   }));
 }

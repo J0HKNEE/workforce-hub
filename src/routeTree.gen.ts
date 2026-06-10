@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TrendsRouteImport } from './routes/trends'
+import { Route as OccurrencesRouteImport } from './routes/occurrences'
 import { Route as HeadcountRouteImport } from './routes/headcount'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as IndexRouteImport } from './routes/index'
@@ -17,6 +18,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const TrendsRoute = TrendsRouteImport.update({
   id: '/trends',
   path: '/trends',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OccurrencesRoute = OccurrencesRouteImport.update({
+  id: '/occurrences',
+  path: '/occurrences',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HeadcountRoute = HeadcountRouteImport.update({
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
   '/headcount': typeof HeadcountRoute
+  '/occurrences': typeof OccurrencesRoute
   '/trends': typeof TrendsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
   '/headcount': typeof HeadcountRoute
+  '/occurrences': typeof OccurrencesRoute
   '/trends': typeof TrendsRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
   '/headcount': typeof HeadcountRoute
+  '/occurrences': typeof OccurrencesRoute
   '/trends': typeof TrendsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/calendar' | '/headcount' | '/trends'
+  fullPaths: '/' | '/calendar' | '/headcount' | '/occurrences' | '/trends'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/calendar' | '/headcount' | '/trends'
-  id: '__root__' | '/' | '/calendar' | '/headcount' | '/trends'
+  to: '/' | '/calendar' | '/headcount' | '/occurrences' | '/trends'
+  id: '__root__' | '/' | '/calendar' | '/headcount' | '/occurrences' | '/trends'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CalendarRoute: typeof CalendarRoute
   HeadcountRoute: typeof HeadcountRoute
+  OccurrencesRoute: typeof OccurrencesRoute
   TrendsRoute: typeof TrendsRoute
 }
 
@@ -76,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/trends'
       fullPath: '/trends'
       preLoaderRoute: typeof TrendsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/occurrences': {
+      id: '/occurrences'
+      path: '/occurrences'
+      fullPath: '/occurrences'
+      preLoaderRoute: typeof OccurrencesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/headcount': {
@@ -106,6 +123,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CalendarRoute: CalendarRoute,
   HeadcountRoute: HeadcountRoute,
+  OccurrencesRoute: OccurrencesRoute,
   TrendsRoute: TrendsRoute,
 }
 export const routeTree = rootRouteImport
