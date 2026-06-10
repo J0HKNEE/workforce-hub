@@ -44,9 +44,9 @@ function TrendsPage() {
   const { attendance, employees } = useWorkforceData();
 
   const byDate = useMemo(() => {
-    const m = new Map<string, Record<string, number>>();
+    const m = new Map<string, Record<string, string | number>>();
     attendance.forEach((r) => {
-      const row = m.get(r.date) ?? { date: r.date } as Record<string, number>;
+      const row = m.get(r.date) ?? ({ date: r.date } as Record<string, string | number>);
       row[r.type] = ((row[r.type] as number) ?? 0) + 1;
       m.set(r.date, row);
     });
