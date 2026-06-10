@@ -1,8 +1,9 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Users, CalendarCheck, TrendingUp, Github } from "lucide-react";
+import { Users, CalendarCheck, TrendingUp, Github, CalendarDays } from "lucide-react";
 
 const nav = [
   { to: "/", label: "Today", icon: CalendarCheck },
+  { to: "/calendar", label: "Calendar", icon: CalendarDays },
   { to: "/trends", label: "Trends", icon: TrendingUp },
   { to: "/headcount", label: "Headcount", icon: Users },
 ] as const;
