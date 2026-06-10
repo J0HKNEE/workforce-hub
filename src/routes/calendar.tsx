@@ -125,6 +125,8 @@ function CalendarPage() {
   const [manager, setManager] = useState<string>("all");
   const [employeeId, setEmployeeId] = useState<string>("all");
   const [typeFilter, setTypeFilter] = useState<string>("all");
+  const [occFilter, setOccFilter] = useState<"all" | "only" | "exclude">("all");
+  const [reasonFilter, setReasonFilter] = useState<string>("all");
 
   const managers = useMemo(
     () => Array.from(new Set(employees.map((e) => e.manager))).sort(),
