@@ -318,6 +318,27 @@ function CalendarPage() {
                 ))}
               </SelectContent>
             </Select>
+            <Select value={occFilter} onValueChange={(v) => setOccFilter(v as typeof occFilter)}>
+              <SelectTrigger className="w-44">
+                <SelectValue placeholder="Occurrences" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All records</SelectItem>
+                <SelectItem value="only">Occurrences only</SelectItem>
+                <SelectItem value="exclude">Exclude occurrences</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={reasonFilter} onValueChange={setReasonFilter}>
+              <SelectTrigger className="w-44">
+                <SelectValue placeholder="Reason" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All reasons</SelectItem>
+                {(Object.keys(OCCURRENCE_REASON_LABEL) as Exclude<OccurrenceReason, "">[]).map((r) => (
+                  <SelectItem key={r} value={r}>{OCCURRENCE_REASON_LABEL[r]}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </CardContent>
       </Card>
