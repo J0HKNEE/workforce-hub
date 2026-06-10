@@ -1,0 +1,52 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bun run build
+        env:
+          # GitHub Pages serves from /<repo>/ — set this to your repo name
+          # or leave empty if you use a custom domain / user-site (user.github.io).
+          BASE_PATH: ""
+      - name: Prepare static output
+        run: |
+          # TanStack Start / Nitro emits the static client bundle here
+          OUT_DIR=".output/public"
+          if [ ! -d "$OUT_DIR" ]; then OUT_DIR="dist"; fi
+          # SPA fallback so client-side routes work on GitHub Pages
+          cp "$OUT_DIR/index.html" "$OUT_DIR/404.html" || true
+          echo "Using $OUT_DIR"
+          echo "out_dir=$OUT_DIR" >> $GITHUB_ENV
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ env.out_dir }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
