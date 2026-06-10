@@ -15,10 +15,12 @@ import { Badge } from "@/components/ui/badge";
 import { useWorkforceData } from "@/hooks/use-workforce-data";
 import {
   TYPE_LABEL,
+  OCCURRENCE_REASON_LABEL,
   type AttendanceRecord,
   type AttendanceType,
+  type OccurrenceReason,
 } from "@/lib/attendance";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { AlertTriangle, ChevronLeft, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/calendar")({
   head: () => ({
