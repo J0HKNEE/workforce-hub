@@ -1,0 +1,9 @@
+team,location,expected_per_day
+Operations,HQ,2
+Operations,Remote,1
+Operations,West,1
+Support,HQ,2
+Support,Remote,1
+Support,West,1
+Engineering,HQ,2
+Engineering,Remote,2

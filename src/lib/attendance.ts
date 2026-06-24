@@ -114,6 +114,33 @@ export async function loadAttendance(): Promise<AttendanceRecord[]> {
   }));
 }
 
+export interface CoverageTarget {
+  team: string;
+  location: string;
+  expected_per_day: number;
+}
+
+export async function loadCoverageTargets(): Promise<CoverageTarget[]> {
+  const res = await fetch("/data/coverage_targets.csv");
+  if (!res.ok) return [];
+  const text = await res.text();
+  return parseCSV(text).map((r) => ({
+    team: r.team,
+    location: r.location,
+    expected_per_day: Number(r.expected_per_day) || 0,
+  }));
+}
+
+export function eachDateInRange(from: string, to: string): string[] {
+  const out: string[] = [];
+  const start = new Date(from + "T00:00:00");
+  const end = new Date(to + "T00:00:00");
+  for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
+    out.push(d.toISOString().slice(0, 10));
+  }
+  return out;
+}
+
 export function latestDate(records: AttendanceRecord[]): string {
   if (records.length === 0) return new Date().toISOString().slice(0, 10);
   return records.map((r) => r.date).sort().at(-1)!;
