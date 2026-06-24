@@ -13,6 +13,7 @@ import { Route as TrendsRouteImport } from './routes/trends'
 import { Route as PerfectRouteImport } from './routes/perfect'
 import { Route as OccurrencesRouteImport } from './routes/occurrences'
 import { Route as HeadcountRouteImport } from './routes/headcount'
+import { Route as CoverageRouteImport } from './routes/coverage'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -36,6 +37,11 @@ const HeadcountRoute = HeadcountRouteImport.update({
   path: '/headcount',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CoverageRoute = CoverageRouteImport.update({
+  id: '/coverage',
+  path: '/coverage',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CalendarRoute = CalendarRouteImport.update({
   id: '/calendar',
   path: '/calendar',
@@ -50,6 +56,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
+  '/coverage': typeof CoverageRoute
   '/headcount': typeof HeadcountRoute
   '/occurrences': typeof OccurrencesRoute
   '/perfect': typeof PerfectRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
+  '/coverage': typeof CoverageRoute
   '/headcount': typeof HeadcountRoute
   '/occurrences': typeof OccurrencesRoute
   '/perfect': typeof PerfectRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
+  '/coverage': typeof CoverageRoute
   '/headcount': typeof HeadcountRoute
   '/occurrences': typeof OccurrencesRoute
   '/perfect': typeof PerfectRoute
@@ -77,16 +86,25 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/calendar'
+    | '/coverage'
     | '/headcount'
     | '/occurrences'
     | '/perfect'
     | '/trends'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/calendar' | '/headcount' | '/occurrences' | '/perfect' | '/trends'
+  to:
+    | '/'
+    | '/calendar'
+    | '/coverage'
+    | '/headcount'
+    | '/occurrences'
+    | '/perfect'
+    | '/trends'
   id:
     | '__root__'
     | '/'
     | '/calendar'
+    | '/coverage'
     | '/headcount'
     | '/occurrences'
     | '/perfect'
@@ -96,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CalendarRoute: typeof CalendarRoute
+  CoverageRoute: typeof CoverageRoute
   HeadcountRoute: typeof HeadcountRoute
   OccurrencesRoute: typeof OccurrencesRoute
   PerfectRoute: typeof PerfectRoute
@@ -132,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HeadcountRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/coverage': {
+      id: '/coverage'
+      path: '/coverage'
+      fullPath: '/coverage'
+      preLoaderRoute: typeof CoverageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/calendar': {
       id: '/calendar'
       path: '/calendar'
@@ -152,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CalendarRoute: CalendarRoute,
+  CoverageRoute: CoverageRoute,
   HeadcountRoute: HeadcountRoute,
   OccurrencesRoute: OccurrencesRoute,
   PerfectRoute: PerfectRoute,
